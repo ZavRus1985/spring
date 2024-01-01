@@ -1,0 +1,6 @@
+create table if not exists cars(
+id bigint primary key auto_increment,
+model varchar(50),
+price decimal(5,2) default 0.00,
+owner varchar(50),
+year int);
