@@ -10,6 +10,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>spring-core</module>
+        <module>hibernate</module>
+        <module>hibernate/hibernate-basic</module>
     </modules>
 
     <properties>
