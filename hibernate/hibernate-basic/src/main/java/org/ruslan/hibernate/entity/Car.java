@@ -10,14 +10,16 @@ import java.util.UUID;
 @Table(name = "cars")
 public class Car {
 
+
+    //  @Id
+    //  @GeneratedValue(strategy = GenerationType.UUID)
+    //  private String id;
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    //@Column(unique = true, nullable = false)
-    private String model;
-    //@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
+    private String model;
     @Column(nullable = false)
     private BigDecimal price;
     private String owner;
@@ -26,14 +28,13 @@ public class Car {
     @Column(name = "insurance_expiration_date")
     private LocalDate insuranceExpirationDate;
 
-
     public Car(){
 
     }
 
-    public Car(String model, Long id, BigDecimal price, String owner, Integer year, LocalDate insuranceExpirationDate) {
-        this.model = model;
+    public Car(Long id, String model, BigDecimal price, String owner, Integer year, LocalDate insuranceExpirationDate) {
         this.id = id;
+        this.model = model;
         this.price = price;
         this.owner = owner;
         this.year = year;
@@ -53,7 +54,7 @@ public class Car {
     }
 
     public void setModel(String model) {
-        this.model = String.valueOf(UUID.fromString(model));
+        this.model = model;
     }
 
     public BigDecimal getPrice() {
@@ -88,4 +89,11 @@ public class Car {
         this.insuranceExpirationDate = insuranceExpirationDate;
     }
 
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", model='" + model + '\'' +
+                '}';
+    }
 }

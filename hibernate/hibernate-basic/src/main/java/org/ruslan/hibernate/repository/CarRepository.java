@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Component
 public class CarRepository {
@@ -24,101 +26,45 @@ public class CarRepository {
 
     public List<Car> getAllCars() {
 
-        Session session = null;
-        try {
-            session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
-
-            List<Car> cars = session.createQuery("from Car", Car.class)
+        Function<Session, List<Car>> getAllProducts = (session) -> {
+            return session.createQuery("from Car", Car.class)
                     .getResultList();
-            session.getTransaction().commit();
-            return cars;
-        }
-        catch (Exception ex) {
-
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            ex.printStackTrace();
-            return List.of();
-        }
+        };
+        return executeInTransaction(getAllProducts);
     }
+
+
     public Optional<Car> getCarById(Long id) {
 
-        Session session = null;
-
-        try {
-            session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
-
-            Car car = session.get(Car.class, id);
-
-            session.getTransaction().commit();
-            return Optional.ofNullable(car);
-
-        }
-        catch (Exception ex) {
-
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            ex.printStackTrace();
-            return Optional.empty();
-        }
+        Function<Session, Optional<Car>> getCar = (session) -> {
+            return session.createQuery("from Car", Car.class)
+                    .getResultList().stream().findFirst();
+        };
+        return executeInTransaction(getCar);
     }
 
     public List<Car> getCarByFilter(Long year) {
 
-        Session session = null;
-
-        try {
-            session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
-
-            Query query = session.createQuery("from Car where year > :yearParam");
-            query.setParameter("yearParam", year);
+        Function<Session, List<Car>> getCar = (session) -> {
+            Query query = session.createQuery("from Car where year > :yearParam")
+                    .setParameter("yearParam", year);
             List<Car> cars = query.list();
-
-            session.getTransaction().commit();
             return cars;
-        }
-        catch (Exception ex) {
-
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            ex.printStackTrace();
-            return List.of();
-        }
+        };
+        return executeInTransaction(getCar);
     }
 
     public void saveCar(Car car) {
 
-        Session session = null;
-
-        try {
-            session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
-
+        Consumer<Session> saveCar = (session) -> {
             session.persist(car);
-
-            session.getTransaction().commit();
-        }
-        catch (Exception ex) {
-
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            ex.printStackTrace();
-        }
+        };
+        executeInTransaction(saveCar);
     }
 
     public void updateCar(Car car, Long id) {
 
-        Session session = null;
-        try {
-            session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
+        Consumer<Session> updateCar = (session) -> {
             Car updatableCar = session.get(Car.class, id);
             if (updatableCar == null) {
                 throw  new NoSuchElementException("No such car in table");
@@ -129,40 +75,51 @@ public class CarRepository {
             UpdateField updateField = new UpdateField();
             updateField.updFields(updatableCar, car);
             session.persist(updatableCar);
-
-            session.getTransaction().commit();
-        }
-        catch (Exception ex) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            ex.printStackTrace();
-        }
+        };
+        executeInTransaction(updateCar);
     }
 
     public void deleteCar(Long id) {
 
-        Session session = null;
-        try {
-            session = sessionFactory.getCurrentSession();
-            session.beginTransaction();
-            Car deletableCar = session.get(Car.class, id);
-            if (deletableCar == null) {
-                throw  new NoSuchElementException("No such car in table");
-            }
-            session.remove(deletableCar);
-
-            session.getTransaction().commit();
-        }
-        catch (Exception ex) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            ex.printStackTrace();
-        }
+        Consumer<Session> deletableCar = (session) -> {
+            int rowsAffected = session.createMutationQuery("delete from Product where id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+        };
+        executeInTransaction(deletableCar);
     }
 
+    private void executeInTransaction(Consumer<Session> consumer){
+        Function<Session, Void> func = (session -> {
+            consumer.accept(session);
+            return null;
+        });
+        executeInTransaction(func);
+    }
 
+    private <T> T executeInTransaction(Function<Session, T> func){
+        Session session = null;
+        try{
+            session = sessionFactory.openSession();
 
+            session.getTransaction().begin();
 
+            T result = func.apply(session);
+
+            session.getTransaction().commit();
+
+            return result;
+        }
+        catch (Exception ex){
+            if(session != null){
+                session.getTransaction().rollback(); // 0/4 - success
+            }
+            throw new RuntimeException(ex);
+        }
+        finally {
+            if(session != null){
+                session.close();
+            }
+        }
+    }
 }

@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class HibernateConfig {
 
-    @Bean
-    public SessionFactory sessionFactory() {
-        return new Configuration()
-                .configure("hibernate-config.xml")
-                .addAnnotatedClass(Car.class)
-                .buildSessionFactory();
-    }
+//    @Bean
+//    public SessionFactory sessionFactory() {
+//        return new Configuration()
+//                .configure("hibernate-config.xml")
+//                .addAnnotatedClass(Car.class)
+//                .buildSessionFactory();
+//    }
 }

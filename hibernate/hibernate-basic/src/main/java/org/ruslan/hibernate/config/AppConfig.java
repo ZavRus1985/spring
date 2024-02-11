@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import java.util.Properties;
 
-import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan("org.ruslan.hibernate")
 public class AppConfig {
@@ -39,7 +38,7 @@ public class AppConfig {
         properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         properties.put(Environment.HBM2DDL_AUTO, "create");
         properties.put(Environment.SHOW_SQL, "true");
-        properties.put(Environment.FORMAT_SQL, "false");
+        properties.put(Environment.FORMAT_SQL, "true");
         properties.put(Environment.GLOBALLY_QUOTED_IDENTIFIERS, "true");
         configuration.setProperties(properties);
         configuration.addAnnotatedClass(Car.class);
