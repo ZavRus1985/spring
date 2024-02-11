@@ -17,7 +17,7 @@ public class ApplicationMain {
 
         CarRepository carRepository = applicationContext.getBean(CarRepository.class);
 
-        Car car = new Car(1L, "Supra", new BigDecimal("2002.22"), "Toyota", 2000, LocalDate.of(2022,12,11));
+        Car car = new Car("Supra",1L, new BigDecimal("2002.22"), "Toyota", 2000, LocalDate.of(2022,12,11));
 //        Car car1 = new Car(null, "Gelentwagen", new BigDecimal("1999.99"), "Mersedes", 2023, LocalDate.of(2024,1,1));
 //        Car car2 = new Car(null, "Priora", new BigDecimal("1000.12"), "Lada", 2004, LocalDate.of(2023,10,9));
         carRepository.saveCar(car);

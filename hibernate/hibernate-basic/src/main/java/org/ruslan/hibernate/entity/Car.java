@@ -1,21 +1,23 @@
 package org.ruslan.hibernate.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "cars")
 public class Car {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    //@Column(unique = true, nullable = false)
+    private String model;
     //@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Id
-    @UuidGenerator
-   // @Column(unique = true, nullable = false)
-    private String model;
+
     @Column(nullable = false)
     private BigDecimal price;
     private String owner;
@@ -28,9 +30,10 @@ public class Car {
     public Car(){
 
     }
-    public Car(Long id, String model, BigDecimal price, String owner, Integer year, LocalDate insuranceExpirationDate) {
-        this.id = id;
+
+    public Car(String model, Long id, BigDecimal price, String owner, Integer year, LocalDate insuranceExpirationDate) {
         this.model = model;
+        this.id = id;
         this.price = price;
         this.owner = owner;
         this.year = year;
@@ -50,7 +53,7 @@ public class Car {
     }
 
     public void setModel(String model) {
-        this.model = model;
+        this.model = String.valueOf(UUID.fromString(model));
     }
 
     public BigDecimal getPrice() {

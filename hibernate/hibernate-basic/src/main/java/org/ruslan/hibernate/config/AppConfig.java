@@ -16,7 +16,15 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("org.ruslan.hibernate")
 public class AppConfig {
 
+
     /*Java Code configuration*/
+    @Bean
+    public SessionFactory sessionFactory(Configuration configuration){
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties()).build();
+        return configuration.buildSessionFactory(serviceRegistry);
+    }
+
     @Primary
     @Bean
     public Configuration configuration(){
