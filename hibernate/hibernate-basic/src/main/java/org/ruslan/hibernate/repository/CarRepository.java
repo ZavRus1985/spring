@@ -82,7 +82,7 @@ public class CarRepository {
     public void deleteCar(Long id) {
 
         Consumer<Session> deletableCar = (session) -> {
-            int rowsAffected = session.createMutationQuery("delete from Product where id = :id")
+            int rowsAffected = session.createMutationQuery("delete from Car where id = :id")
                     .setParameter("id", id)
                     .executeUpdate();
         };
