@@ -15,6 +15,7 @@ public class Main {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JpaConfig.class);
         EntityManagerFactory emf = context.getBean(EntityManagerFactory.class);
         MovieRepository mr = new MovieRepository(emf);
+        EntityManager em = null;
 
 //        Movie m1 = new Movie(null, "The Godfather", 1972, "English");
 //        Movie m2 = new Movie(null, "Dune", 2021, "English");
@@ -32,6 +33,9 @@ public class Main {
 
         //1 createQuery
         /*
+
+        try {
+
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
@@ -44,17 +48,28 @@ public class Main {
         System.out.println("entities Updated: " + rowsUpdated);
 
         em.getTransaction().commit();
-        em.close();
+
+        }
+        catch(Exception ex) {
+            if (em != null) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException(ex);
+        }
+        finally {
+            if(em != null) {
+                em.close();
+        }
+    }
         */
 
-        //2 persist
+        //2 set
         /*
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
         Movie m3 = em.find(Movie.class, 2L);
         m3.setReleaseYear(2021);
-        em.persist(m3);
 
         em.getTransaction().commit();
         em.close();

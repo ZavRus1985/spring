@@ -21,10 +21,14 @@ public class Main {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JpaConfig.class);
         EntityManagerFactory emf = context.getBean(EntityManagerFactory.class);
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = null;
+
 //------------------------------------------------------------------------------------
         //  1.   Привести пример каскадного сохранения.
 
+//        try {
+//
+//        em = emf.createEntityManager();
 //        em.getTransaction().begin();
 //
 //        Customer customer1 = new Customer(null, "Anna", "89109005552");
@@ -35,23 +39,60 @@ public class Main {
 //        em.persist(customer1);
 //
 //        em.getTransaction().commit();
-//        em.close();
+//        }
+//        catch(Exception ex) {
+//            if (em != null) {
+//                em.getTransaction().rollback();
+//            }
+//            throw new RuntimeException(ex);
+//        }
+//        finally {
+//            if(em != null) {
+//                em.close();
+//            }
+//    }
+
 
 //------------------------------------------------------------------------------------
         //   2.	 Привести пример каскадного обновления.
+/*
+        try {
 
-//        em.getTransaction().begin();
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+//1 step add in database
+//            Customer customer1 = new Customer(null, "Bob", "89109005552");
 //
-//        Customer customer1 = new Customer(null, "Bob", "89109005552");
+//            AccountCustomer accCustomer1 = new AccountCustomer(null, "BobLogin", "555");
 //
-//        AccountCustomer accCustomer1 = new AccountCustomer(null, "BobLogin", "555");
-//
-//        customer1.setAccountCustomer(accCustomer1);
-//        em.merge(customer1);
-//
-//        em.getTransaction().commit();
-//        em.close();
+//            customer1.setAccountCustomer(accCustomer1);
+//            em.merge(customer1);
 
+//            Hibernate: insert into account_customers (login, pass) values (?, ?)
+//            Hibernate: insert into customers (account_id, name, phone) values (?, ?, ?)
+//-----------------------
+//2 step  find and update
+//            Customer customer = em.find(Customer.class, 1);
+//            AccountCustomer accCustomer = new AccountCustomer(null, "LeonardoLogin", "000");
+//            customer.setAccountCustomer(accCustomer);
+//            em.merge(customer);
+//            Hibernate: select c1_0.customer_id,a1_0.account_id,a1_0.login,a1_0.pass,c1_0.name,c1_0.phone from customers c1_0 left join account_customers a1_0 on a1_0.account_id=c1_0.account_id where c1_0.customer_id=?
+//            Hibernate: insert into account_customers (login, pass) values (?, ?)
+//            Hibernate: update customers set account_id=?, name=?, phone=? where customer_id=?
+//----------------------
+
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (em != null) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException(ex);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+*/
 // ----------------------------------------------------------------------------------
         //   3.	 Привести корректный пример каскадного удаления.
 
@@ -96,7 +137,7 @@ public class Main {
         em.close();
 
         */
-                 //---------------<property name="hibernate.hbm2ddl.auto" value="update"/>---------------------//
+        //---------------<property name="hibernate.hbm2ddl.auto" value="update"/>---------------------//
 
         /* 2 step удалились все записи из обеих таблиц
 
