@@ -1,4 +1,4 @@
-package org.ruslan.web.entity;
+package org.ruslan.web.bean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
