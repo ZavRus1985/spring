@@ -1,9 +1,8 @@
 package org.ruslan.web.controller;
 
-import org.ruslan.web.entity.CreateObject;
-import org.ruslan.web.entity.Message;
-import org.ruslan.web.entity.User;
+import org.ruslan.web.bean.ObjectCreator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,11 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
 
     @Autowired
-    CreateObject createObject;
+    ObjectCreator createObject;
 
     @ResponseBody   // пункт 4 в задании
     @GetMapping("/user")
-    public String geUser() {
+    public String getUser() {
         return createObject.createUser().toString();
     }
 

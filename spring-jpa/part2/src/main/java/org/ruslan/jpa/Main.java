@@ -225,7 +225,7 @@ public class Main {
         category.setProducts(List.of(product4));
         em.persist(product4);
 
-//Cannot invoke "org.ruslan.jpa.entity.onetomany.Category.setProducts(java.util.List)" because "category" is null
+//Cannot invoke "org.ruslan.jpa.bean.onetomany.Category.setProducts(java.util.List)" because "category" is null
 
         em.getTransaction().commit();
         em.close();

@@ -1,4 +1,4 @@
-package org.ruslan.web.entity;
+package org.ruslan.web.bean;
 
 public class Message {
 

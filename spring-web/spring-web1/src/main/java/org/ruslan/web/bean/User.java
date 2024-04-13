@@ -1,4 +1,4 @@
-package org.ruslan.web.entity;
+package org.ruslan.web.bean;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -6,10 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class User {
 
-    @Value("${user.name}")
-    private String name;
+    String name;
 
-    @Value("${user.age}")
     private Integer age;
 
     public User() {
