@@ -1,17 +1,12 @@
-package org.ruslan.web.bean;
+package org.ruslan.web.model;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class User {
 
-    String name;
-
-    private Integer age;
-
-    public User() {
-    }
+    private final String name;
+    private final Integer age;
 
     public User(String name, Integer age) {
         this.name = name;

@@ -1,12 +1,9 @@
-package org.ruslan.web.bean;
+package org.ruslan.web.model;
 
 public class Message {
 
-    private String text;
-    private Boolean check;
-
-    public Message() {
-    }
+    private final String text;
+    private final Boolean check;
 
     public Message(String text, Boolean check) {
         this.text = text;

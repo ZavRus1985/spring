@@ -1,10 +1,10 @@
 package org.ruslan.web.bean;
 
+import org.ruslan.web.model.Message;
+import org.ruslan.web.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 @Component
 public class ObjectCreator {
@@ -14,18 +14,20 @@ public class ObjectCreator {
     @Value("${u.age}")
     Integer age;
 
+    @Value("${m.text}")
+    String text;
+    @Value("${m.check}")
+    Boolean check;
+
 
     @Autowired
     public User createUser( ) {
-
         return new User(name, age);
     }
 
     @Autowired
     public Message createMessage() {
-        return new Message("text", true);
+        return new Message(text, check);
     }
 
-    public ObjectCreator() {
-    }
 }

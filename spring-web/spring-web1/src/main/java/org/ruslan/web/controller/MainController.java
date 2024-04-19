@@ -19,16 +19,16 @@ public class MainController {
         return createObject.createUser().toString();
     }
 
-//    @ResponseBody   // пункт 3 в задании
-//    @GetMapping("/message")
-//    public String getMessage() {
-//        return new Message("TeXt-Message", true).toString();
-//    }
-//
-//    @ResponseBody
-//    @GetMapping("/hello")
-//    public String getHelloMessage() {
-//        return "Hello";
-//    }
+    @ResponseBody   // пункт 3 в задании
+    @GetMapping("/message")
+    public String getMessage() {
+        return createObject.createMessage().toString();
+    }
+
+    @ResponseBody
+    @GetMapping("/hello")
+    public String getHelloMessage() {
+        return "Hello";
+    }
 
 }
