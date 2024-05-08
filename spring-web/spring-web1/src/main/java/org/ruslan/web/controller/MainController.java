@@ -25,7 +25,7 @@ public class MainController {
         return createObject.createMessage().toString();
     }
 
-    @ResponseBody
+    @ResponseBody 
     @GetMapping("/hello")
     public String getHelloMessage() {
         return "Hello";
