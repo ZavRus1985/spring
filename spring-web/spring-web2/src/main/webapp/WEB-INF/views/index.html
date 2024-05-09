@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:font-family="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>Документ HTML5</title>
     <meta name="description" content="Spring mvc + html + css">
     <meta name="author" content="Bill Gates">
+
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
+
+
+<body font-family: Algerian;>
 
 <style>
     body {
@@ -16,8 +20,8 @@
 }
 </style>
 
-<h1 style="font-size: 140%; color: red; text-align: center;">
-    Домашнее задание
+<h1>
+    Welcome, <span th:text="${name}"></span>
 </h1>
 
 
