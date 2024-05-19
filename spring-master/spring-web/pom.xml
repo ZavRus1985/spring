@@ -13,9 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>spring-web1</module>
-        <module>spring-web2</module>
-        <module>spring-web2</module>
-        <module>spring-web3</module>
     </modules>
 
     <properties>

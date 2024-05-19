@@ -9,13 +9,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>spring-web</artifactId>
+    <artifactId>hibernate</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>spring-web1</module>
-        <module>spring-web2</module>
-        <module>spring-web2</module>
-        <module>spring-web3</module>
+        <module>hibernate-relations</module>
+        <module>hibernate-relations2</module>
     </modules>
 
     <properties>

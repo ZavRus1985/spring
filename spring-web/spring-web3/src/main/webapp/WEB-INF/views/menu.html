@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:font-family="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form th:action="@{/form-handler}" method="get">
+    <label> Fill get form
+    <button type="submit">Get-Form</button>
+        </label>
+</form>
+<br>
+<form th:action="@{/form-post}" method="get">
+    <label> Fill post form
+        <button type="submit">Post-Form</button>
+    </label>
+</form>
+<br>
+<form th:action="@{/table}" method="get">
+    <label> List person
+        <button type="submit">GetTable</button>
+    </label>
+</form>
+
+</body>
+</html>

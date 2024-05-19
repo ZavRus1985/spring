@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:font-family="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+    <ol>
+        <li th:text="${person.name}"></li>
+        <li th:text="${person.sex}"></li>
+        <li th:text="${person.age}"></li>
+    </ol>
+-->
+<!--6. После отправки формы методом POST необходимо выводить таблицу из пункта 5.-->
+<table>
+    <tr>
+        <th> Name </th>
+        <th> Sex </th>
+        <th> Age </th>
+    </tr>
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.sex}"></td>
+        <td th:text="${person.age}"></td>
+
+</table>
+</body>
+</html>

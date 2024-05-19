@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:font-family="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/form-handler}" method="get">
+
+    <label> Name:
+        <input type="text" name="name">
+    </label>
+    <br>
+    <label> Sex:
+        <input type="text" name="sex">
+    </label>
+    <br>
+    <label> Age:
+        <input type="text" name="age">
+    </label>
+    <br>
+    <button type="submit"> Send</button>
+</form>
+
+<br>
+<br>
+
+<form th:action="@{/form-handler-post}" method="post" th:object="${person}">
+
+    <label> Name:
+        <input type="text" name="name">
+    </label>
+    <br>
+    <label> Sex:
+        <input list="sexList" type="text" name="sex" placeholder="choose a gender">
+    <datalist id="sexList">
+        <option value="male"/> </option>
+        <option value="female"> </option>
+    </datalist>
+    </label>
+    <br>
+    <label> Age:
+        <input type="text" name="age">
+    </label>
+    <br>
+    <button type="submit"> Send</button>
+</form>
+
+<br>
+<br>
+<h2>Item 9</h2>
+
+<form th:action="@{/form-delete}" method="post" th:object="${person}">
+
+    <label> Field:
+        <input list="fieldList" type="text" name="field" placeholder="choose a field">
+        <datalist id="fieldList">
+            <option value="name"/> </option>
+            <option value="sex"> </option>
+            <option value="age"> </option>
+        </datalist>
+    </label>
+    <br>
+    <label> Value:
+        <input type="text" name="value">
+    </label>
+    <br>
+    <button type="submit"> Send</button>
+</form>
+
+</body>
+
+</html>
