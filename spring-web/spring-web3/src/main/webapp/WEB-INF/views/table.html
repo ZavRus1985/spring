@@ -8,11 +8,11 @@
 
 <table>
     <tr>
-        <th> Name! </th>
+        <th> Name </th>
         <th> Sex </th>
         <th> Age </th>
     </tr>
-    <tr th:each="person : ${persons}">
+    <tr th:each="person : ${people}">
         <td th:text="${person.name}"></td>
         <td th:text="${person.sex}"></td>
         <td th:text="${person.age}"></td>

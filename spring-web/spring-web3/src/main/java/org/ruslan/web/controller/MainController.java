@@ -2,6 +2,7 @@ package org.ruslan.web.controller;
 
 
 import org.ruslan.web.model.Person;
+import org.ruslan.web.util.SortUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,10 @@ import java.util.*;
 @Controller
 public class MainController {
 
-    private LinkedList<Person> persons = new LinkedList<>();
+    private LinkedList<Person> people = new LinkedList<>();
 
-    public LinkedList<Person> getPersons() {
-        return persons;
+    public LinkedList<Person> getPeople() {
+        return people;
     }
 
     //С помощью значений из параметров запроса.
@@ -54,14 +55,14 @@ public class MainController {
     @PostMapping("/form-handler-post")
     public String handleFormPost(@ModelAttribute Person person) {
 
-        this.persons.add(person);
+        this.people.add(person);
         return "redirect:/result";
     }
 
     @GetMapping("/result")
     public String getResult(Model model) {
 
-        model.addAttribute("person", this.persons.getLast());
+        model.addAttribute("person", this.people.getLast());
         System.out.println("Invoked/result");
         return "getUserForm";
     }
@@ -72,7 +73,7 @@ public class MainController {
     @GetMapping("/table")
     public String getTable(Model model) {
 
-        model.addAttribute("persons", this.persons);
+        model.addAttribute("people", this.people);
         return "table";
     }
 
@@ -83,16 +84,19 @@ public class MainController {
     порядок сортировки, поле для сортировки. Пример: нужно вывести 5 объектов,
     отсортированных по возрастанию по возрасту.
     */
-    @GetMapping("/array") //localhost:8080/array/0
+    @GetMapping("/people") //localhost:8080/people?size=3&field=name&sort=desc
     public String getIndex(@RequestParam Integer size, @RequestParam String field,
                            @RequestParam String sort, Model model) {
 
         sort(size, field, sort);
-        model.addAttribute("persons", persons);
+//        SortUtil.sortListByField(people.subList(0,size),field);
+        model.addAttribute("people", people.subList(0,size));
         return "table";
     }
 
+
     private void sort(Integer size, String field, String sort) {
+
         Comparator<Person> comparator;
         switch (field) {
             case "name" -> comparator = Comparator.comparing(Person::getName);
@@ -103,7 +107,7 @@ public class MainController {
         if (Objects.equals(sort, "desc")) {
             comparator = comparator.reversed();
         }
-        persons.sort(comparator);
+        people.sort(comparator);
     }
 
     //--------------------------------------------------------------------------------------------------
@@ -112,12 +116,25 @@ public class MainController {
      * По данным формы необходимо удалить совпадающие объекты из списка Person.
      * После удаления вывести таблицу со всеми Person.
      * Пример: введены «пол» и «мужчина», необходимо удалить всех мужчин из списка.
-     * */
+     */
+
+    @GetMapping("/form1")
+    public String getForm1() {
+
+        return "delete-form";
+    }
+
     @PostMapping("/form-delete")
-    public String deletePerson(@ModelAttribute Person person) {
+    public String deletePerson(@RequestParam String field, @RequestParam String value) {
 
-
-        return "table";
+        switch (field){
+            case "name" -> people.removeIf(p -> p.getName().equals(value));
+            case "sex" -> people.removeIf(p -> p.getSex().equals(value));
+            case "age" -> people.removeIf(p -> (p.getAge().equals(Integer.parseInt(value))));
+            //default нет, т.к. поле выбирается на странице исключительно их списка
+        }
+        System.out.println(people);
+        return "redirect:/table";
     }
     //---------------------------------------------------------------------------------------------------
     /*

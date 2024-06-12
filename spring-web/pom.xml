@@ -16,6 +16,7 @@
         <module>spring-web2</module>
         <module>spring-web2</module>
         <module>spring-web3</module>
+        <module>spring-web4</module>
     </modules>
 
     <properties>

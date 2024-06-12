@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:font-family="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:font-family="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,8 +9,8 @@
 
 <form th:action="@{/form-handler}" method="get">
     <label> Fill get form
-    <button type="submit">Get-Form</button>
-        </label>
+        <button type="submit">Get-Form</button>
+    </label>
 </form>
 <br>
 <form th:action="@{/form-post}" method="get">
@@ -19,8 +19,14 @@
     </label>
 </form>
 <br>
+<form th:action="@{/form1}" method="get">
+    <label> Delete form
+        <button type="submit">Delete Person</button>
+    </label>
+</form>
+<br>
 <form th:action="@{/table}" method="get">
-    <label> List person
+    <label> List people
         <button type="submit">GetTable</button>
     </label>
 </form>

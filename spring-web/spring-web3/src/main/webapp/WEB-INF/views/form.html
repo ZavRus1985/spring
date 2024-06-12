@@ -47,28 +47,6 @@
     <button type="submit"> Send</button>
 </form>
 
-<br>
-<br>
-<h2>Item 9</h2>
-
-<form th:action="@{/form-delete}" method="post" th:object="${person}">
-
-    <label> Field:
-        <input list="fieldList" type="text" name="field" placeholder="choose a field">
-        <datalist id="fieldList">
-            <option value="name"/> </option>
-            <option value="sex"> </option>
-            <option value="age"> </option>
-        </datalist>
-    </label>
-    <br>
-    <label> Value:
-        <input type="text" name="value">
-    </label>
-    <br>
-    <button type="submit"> Send</button>
-</form>
-
 </body>
 
 </html>

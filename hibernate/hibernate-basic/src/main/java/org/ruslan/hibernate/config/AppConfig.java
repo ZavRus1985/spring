@@ -14,16 +14,14 @@ import java.util.Properties;
 
 @ComponentScan("org.ruslan.hibernate")
 public class AppConfig {
-
-
-    /*Java Code configuration*/
-    @Bean
-    public SessionFactory sessionFactory(Configuration configuration){
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties()).build();
-        return configuration.buildSessionFactory(serviceRegistry);
-    }
-
+//
+//    /*Java Code configuration*/
+//    @Bean
+//    public SessionFactory sessionFactory(Configuration configuration){
+//        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+//                .applySettings(configuration.getProperties()).build();
+//        return configuration.buildSessionFactory(serviceRegistry);
+//    }
     @Primary
     @Bean
     public Configuration configuration(){

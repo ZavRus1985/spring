@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:font-family="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Item 9 remove object</h2>
+
+<form th:action="@{/form-delete}" method="post" >
+
+    <label> Field:
+        <input list="fieldList" type="text" name="field" placeholder="choose a field">
+        <datalist id="fieldList">
+            <option value="name"/> </option>
+            <option value="sex"> </option>
+            <option value="age"> </option>
+        </datalist>
+    </label>
+    <br>
+    <label> Value:
+        <input type="text" name="value">
+    </label>
+    <br>
+    <button type="submit"> Send</button>
+</form>
+
+</body>
+
+</html>
