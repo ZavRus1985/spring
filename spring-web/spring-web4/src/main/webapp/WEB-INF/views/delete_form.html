@@ -9,17 +9,16 @@
           crossorigin="anonymous">
 </head>
 <body>
-<div class="container justify-content-center card col-sm-6">
-    <h3 class="text-center">Employee delete form</h3>
+    <div class="container justify-content-center card col-sm-6">
+        <h3 class="text-center">Employee delete form</h3>
 
-    <form th:method="delete" th:object="${employee}" th:action="@{/delete/{id}(id=${id})}">
+        <form th:method="delete" th:object="${employee}" th:action="@{/{id}(id=${id})}">
 
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Delete</button>
+            </div>
 
-
-        <div class="box-footer mb-1 mt-3">
-            <button type="submit" class="btn btn-primary">Delete</button>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 </body>
 </html>

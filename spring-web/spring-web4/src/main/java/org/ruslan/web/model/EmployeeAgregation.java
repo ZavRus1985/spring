@@ -1,4 +1,4 @@
-package org.ruslan.web;
+package org.ruslan.web.model;
 
 
 import org.springframework.stereotype.Component;

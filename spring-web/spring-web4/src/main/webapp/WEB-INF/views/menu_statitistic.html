@@ -11,22 +11,22 @@
 <body>
 
         <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-            <form method="post"  th:action="@{/employees/average}">
+            <form method="post"  th:action="@{/employees/avg}">
                 <div>
                     <button type="submit" class="btn btn-primary">Av.Salary</button>
                 </div>
             </form>
-            <form method="post" th:object="${client}" th:action="@{/clients}">
+            <form method="post" th:action="@{/employees/max}">
                 <div>
                     <button type="submit" class="btn btn-secondary">Max</button>
                 </div>
             </form>
-            <form method="post" th:object="${client}" th:action="@{/clients}">
+            <form method="post" th:action="@{/employees/min}">
                 <div>
                     <button type="submit" class="btn btn-success">Min</button>
                 </div>
             </form>
-            <form method="post" th:object="${client}" th:action="@{/clients}">
+            <form method="post" th:action="@{/employees/sum}">
                 <div>
                     <button type="submit" class="btn btn-danger">Sum</button>
                 </div>

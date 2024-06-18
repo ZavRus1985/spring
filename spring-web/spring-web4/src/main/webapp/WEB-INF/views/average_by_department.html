@@ -13,15 +13,18 @@
 <table class="table table-striped table-bordered mx-auto">
     <thead class="table-dark">
     <tr>
-        <th>Department/Average</th>
-
+        <th>Department</th>
+        <th>StatValue</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="employee: ${employees}">
-        <td th:text="${employee}">obj</td>
+        <td th:text="${employee.department}">Department</td>
+        <td th:text="${employee.statValue}">StatValue</td>
     </tr>
     </tbody>
 </table>
+
+
 </body>
 </html>

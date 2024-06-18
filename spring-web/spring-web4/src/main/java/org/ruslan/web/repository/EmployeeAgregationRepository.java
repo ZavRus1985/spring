@@ -2,115 +2,41 @@ package org.ruslan.web.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import org.ruslan.web.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public class EmployeeRepository {
+public class EmployeeAgregationRepository {
 
     private final EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    public EmployeeRepository(EntityManagerFactory managerFactory) {
+    public EmployeeAgregationRepository(EntityManagerFactory managerFactory) {
         entityManagerFactory = managerFactory;
     }
-
     private EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();
     }
 
-
-    public List<Employee> getAllEmployees() {
+    public List<Object[]> aggregationByAverageSalary() {
         EntityManager entityManager = null;
         try {
             entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
 
-            List<Employee> employees = entityManager
-                    .createQuery("from Employee", Employee.class)
-                    .getResultList();
-
+            List<Object[]> averageList = entityManager.createQuery("""
+                    SELECT department, AVG(salary) AS average
+                    FROM Employee
+                    GROUP BY department
+                    """, Object[].class).getResultList();
+            System.out.println(averageList);
             entityManager.getTransaction().commit();
-            return employees;
-        } catch (Exception ex) {
-            if (entityManager != null) {
-                entityManager.getTransaction().rollback();
-            }
-            throw new RuntimeException(ex);
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
-    }
-
-    public Optional<Employee> getEmployeeById(Integer id) {
-        EntityManager entityManager = null;
-        try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-
-            Employee employee = entityManager.find(Employee.class, id);
-
-            entityManager.getTransaction().commit();
-            return Optional.ofNullable(employee);
-        } catch (Exception ex) {
-            if (entityManager != null) {
-                entityManager.getTransaction().rollback();
-            }
-            throw new RuntimeException(ex);
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
-    }
-
-    public void saveEmployee(Employee employee) {
-        EntityManager entityManager = null;
-        try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-
-            if (employee.getId() == null) {
-                entityManager.persist(employee);
-            } else {
-                entityManager.merge(employee);
-            }
-            entityManager.getTransaction().commit();
-        } catch (Exception ex) {
-            if (entityManager != null) {
-                entityManager.getTransaction().rollback();
-            }
-            throw new RuntimeException(ex);
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
-    }
-
-    public void updateOrder(Employee employee, Integer id) {
-        EntityManager entityManager = null;
-        try {
-            entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-
-            Employee updatableEmployee = entityManager.find(Employee.class, id);
-            if(updatableEmployee != null){
-                updatableEmployee.setName(employee.getName());
-                updatableEmployee.setDepartment(employee.getDepartment());
-                updatableEmployee.setSalary(employee.getSalary());
-            }
-            System.out.println(updatableEmployee.getName());
-            entityManager.getTransaction().commit();
+            return averageList;
         }
         catch (Exception ex) {
-            if(entityManager != null){
+            if (entityManager != null) {
                 entityManager.getTransaction().rollback();
             }
             throw new RuntimeException(ex);
@@ -122,24 +48,86 @@ public class EmployeeRepository {
         }
     }
 
-    public void deleteEmployee(Integer id) {
+    public List<Object[]> aggregationByMaxSalary() {
         EntityManager entityManager = null;
         try {
             entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
 
-            Employee deletedEmployee = entityManager.find(Employee.class, id);
-            if (deletedEmployee != null) {
-                entityManager.remove(deletedEmployee);
-            }
-
+            List<Object[]> maxList = entityManager.createQuery("""
+                    SELECT department, Max(salary) AS average
+                    FROM Employee
+                    GROUP BY department
+                    """, Object[].class).getResultList();
+            System.out.println(maxList);
             entityManager.getTransaction().commit();
-        } catch (Exception ex) {
+            return maxList;
+        }
+        catch (Exception ex) {
             if (entityManager != null) {
                 entityManager.getTransaction().rollback();
             }
             throw new RuntimeException(ex);
-        } finally {
+        }
+        finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
+
+    public List<Object[]> aggregationByMinSalary() {
+
+        EntityManager entityManager = null;
+        try {
+            entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+
+            List<Object[]> minList = entityManager.createQuery("""
+                    SELECT department, Min(salary) AS average
+                    FROM Employee
+                    GROUP BY department
+                    """, Object[].class).getResultList();
+            System.out.println(minList);
+            entityManager.getTransaction().commit();
+            return minList;
+        }
+        catch (Exception ex) {
+            if (entityManager != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw new RuntimeException(ex);
+        }
+        finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
+
+    public List<Object[]> aggregationBySumSalary() {
+
+        EntityManager entityManager = null;
+        try {
+            entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+
+            List<Object[]> sumList = entityManager.createQuery("""
+                    SELECT department, Sum(salary) AS average
+                    FROM Employee
+                    GROUP BY department
+                    """, Object[].class).getResultList();
+            System.out.println(sumList);
+            entityManager.getTransaction().commit();
+            return sumList;
+        }
+        catch (Exception ex) {
+            if (entityManager != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw new RuntimeException(ex);
+        }
+        finally {
             if (entityManager != null) {
                 entityManager.close();
             }

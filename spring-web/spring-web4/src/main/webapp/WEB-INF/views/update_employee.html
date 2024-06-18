@@ -12,7 +12,7 @@
 <div class="container justify-content-center card col-sm-6">
     <h3 class="text-center">Employee update form</h3>
 
-    <form th:method="put" th:object="${employee}" th:action="@{/updEmployees/{id}(id=${id})}">
+    <form th:method="put" th:object="${employee}" th:action="@{/employees/{id}(id=${id})}">
 
         <div class="form-group mb-3">
             <label> Name </label>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="box-footer mb-1 mt-3">
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </div>
     </form>
 </div>

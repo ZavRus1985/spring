@@ -1,7 +1,7 @@
 package org.ruslan.web.controller;
 
 import org.ruslan.web.entity.Employee;
-import org.ruslan.web.service.EmpAggregatorService;
+import org.ruslan.web.service.EmployeeAggregatorService;
 import org.ruslan.web.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,26 +13,26 @@ import java.util.List;
 @Controller
 public class EmployeeController {
 
-    private final EmployeeService es;
-    private final EmpAggregatorService eas;
+    private final EmployeeService employeeService;
+    private final EmployeeAggregatorService employeeAggregatorService;
 
     @Autowired
-    public EmployeeController(EmployeeService es, EmpAggregatorService eas) {
-        this.es = es;
-        this.eas = eas;
+    public EmployeeController(EmployeeService employeeService, EmployeeAggregatorService employeeAggregatorService) {
+        this.employeeService = employeeService;
+        this.employeeAggregatorService = employeeAggregatorService;
     }
 
 
     @GetMapping("/employees")
     public String getAllEmployees(Model model) {
-        model.addAttribute("employees", es.getAllEmployees());
+        model.addAttribute("employees", employeeService.getAllEmployees());
         return "employees";
     }
 
-    @GetMapping("/employees/{employeeId}")
-    public String getEmployeeById(@PathVariable Integer employeeId, Model model) {
-        model.addAttribute("employee", es.getEmployeeById(employeeId));
-        return "employee_by_id";
+    @GetMapping("/employees/{id}")
+    public String getEmployeeById(@PathVariable Integer id, Model model) {
+        model.addAttribute("employees", List.of(employeeService.getEmployeeById(id)));
+        return "employees";
     }
 
     //-------------------------------------
@@ -44,51 +44,37 @@ public class EmployeeController {
 
     @PostMapping("/employees")
     public String createEmployeeAndRedirect(@ModelAttribute Employee employee) {
-        es.saveEmployee(employee);
+        employeeService.saveEmployee(employee);
         return "redirect:/employees";
     }
 
     //------------------------------------
-    @GetMapping("/employees/update/{id}")
+    @GetMapping("/employees/{id}/update")
     public String getUpdateEmployeePage(@PathVariable Integer id, Model model) {
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employee", employeeService.getEmployeeById(id));
         return "update_employee";
     }
 
-    @PutMapping("/updEmployees/{id}")
+    @PutMapping("/employees/{id}")
     public String updateEmployeeAndRedirect(@PathVariable Integer id, @ModelAttribute Employee employee) {
-        es.updateEmployee(employee, employee.getId());
+        System.out.println("!!!");
+        employeeService.updateEmployee(employee, employee.getId());
         return "redirect:/employees";
     }
 
     //-------------------------------------
-    @GetMapping("/employees/delete/{id}")
+    @GetMapping("/employees/{id}/delete")
     public String getDeleteEmployeePage(@PathVariable Integer id) {
         return "delete_form";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public String deleteEmployeeAndRedirect(@PathVariable Integer id) {
-        es.deleteEmployee(id);
+        employeeService.deleteEmployee(id);
         return "redirect:/employees";
     }
 
     //-------------------------------------
 
-//   Добавить метод, группирующий работников по отделам с агрегацией по средней зарплате
-// Такой список (отдел – зарплата) необходимо отображать на HTML-странице.
-// Выбор должен осуществляться с помощью параметра запроса
 
-    @GetMapping("/employees/stat") // statistics
-    public String getStatisticEmployeePage() {
-
-        return "menu_statitistic";
-    }
-
-    @PostMapping("/employees/average")
-    public String averageSalaryByDepartmentPage(Model model) {
-        List<Object[]> employees = eas.aggregationByAverageSalary();
-        model.addAttribute("employee", employees);
-        return "average_by_department";
-    }
 }

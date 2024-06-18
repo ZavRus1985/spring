@@ -7,36 +7,38 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
 
-    private final EmployeeRepository er;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeService(EmployeeRepository er) {
-        this.er = er;
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     public List<Employee> getAllEmployees() {
-        return er.getAllEmployees();
+        return employeeRepository.getAllEmployees();
     }
 
     public Employee getEmployeeById(Integer id) {
-        return er.getEmployeeById(id)
+        Optional<Employee> optional = employeeRepository.getEmployeeById(id);
+        return employeeRepository.getEmployeeById(id)
                 .orElseThrow(() -> new NoSuchElementException(
                         "Employee with id='%d' not found".formatted(id)));
     }
 
     public void saveEmployee(Employee employee) {
-        er.saveEmployee(employee);
+        employeeRepository.saveEmployee(employee);
     }
 
     public void updateEmployee(Employee employee, Integer id) {
-        er.updateOrder(employee, id);
+        employeeRepository.updateOrder(employee, id);
     }
 
-    public void deleteEmployee(Integer employeeId){
-        er.deleteEmployee(employeeId);
+    public void deleteEmployee(Integer employeeId) {
+        employeeRepository.deleteEmployee(employeeId);
     }
 }
