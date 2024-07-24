@@ -61,6 +61,6 @@ public class MainController {
     @GetMapping("/users")
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "users.html";
+        return "users";
     }
 }

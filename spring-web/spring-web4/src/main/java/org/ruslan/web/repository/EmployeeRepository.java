@@ -36,12 +36,14 @@ public class EmployeeRepository {
 
             entityManager.getTransaction().commit();
             return employees;
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             if (entityManager != null) {
                 entityManager.getTransaction().rollback();
             }
             throw new RuntimeException(ex);
-        } finally {
+        }
+        finally {
             if (entityManager != null) {
                 entityManager.close();
             }
@@ -134,12 +136,14 @@ public class EmployeeRepository {
             }
 
             entityManager.getTransaction().commit();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             if (entityManager != null) {
                 entityManager.getTransaction().rollback();
             }
             throw new RuntimeException(ex);
-        } finally {
+        }
+        finally {
             if (entityManager != null) {
                 entityManager.close();
             }

@@ -37,8 +37,4 @@ public class EmployeeService {
     public void updateEmployee(Employee employee, Integer id) {
         employeeRepository.updateOrder(employee, id);
     }
-
-    public void deleteEmployee(Integer employeeId) {
-        employeeRepository.deleteEmployee(employeeId);
-    }
 }

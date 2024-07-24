@@ -1,0 +1,10 @@
+server:
+  port: 8090
+
+u:
+  name: "Bob"
+  age: 333
+
+message:
+  text: "hello!!!"
+  check: false

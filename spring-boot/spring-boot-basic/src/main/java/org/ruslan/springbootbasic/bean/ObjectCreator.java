@@ -10,15 +10,14 @@ import org.springframework.stereotype.Component;
 public class ObjectCreator {
 
     @Value("${u.name}")
-    String name;
+    private String name;
     @Value("${u.age}")
-    Integer age;
-
-    @Value("${m.text}")
-    String text;
-    @Value("${m.check}")
-    Boolean check;
-
+    private Integer age;
+//
+//    @Value("${message.text}")
+//    private String text;
+//    @Value("${message.check}")
+//    private Boolean check;
 
     @Autowired
     public User createUser( ) {
@@ -27,7 +26,7 @@ public class ObjectCreator {
 
     @Autowired
     public Message createMessage() {
-        return new Message(text, check);
+        return new Message("text", true);
     }
 
 }

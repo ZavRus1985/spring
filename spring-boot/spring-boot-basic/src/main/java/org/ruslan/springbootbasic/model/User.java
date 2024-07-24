@@ -3,12 +3,15 @@ package org.ruslan.springbootbasic.model;
 
 public class User {
 
-    private final String name;
-    private final Integer age;
+    private String name;
+    private Integer age;
 
     public User(String name, Integer age) {
         this.name = name;
         this.age = age;
+    }
+
+    public User() {
     }
 
     public String getName() {
