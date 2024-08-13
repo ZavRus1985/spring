@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public interface  EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-    public List<Employee> findAll();
+    List<Employee> findAll();
 
-    public Optional<Employee> findById(Integer id);
+    Optional<Employee> findById(Integer id);
 
     @Modifying
     @Transactional

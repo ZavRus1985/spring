@@ -10,8 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RequiredArgsConstructor
 @Controller
+@RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;

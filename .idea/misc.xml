@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/spring-boot-rest" />
+    <file type="web" url="file://$PROJECT_DIR$/spring-boot/spring-boot-rest" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot/spring-boot-basic/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot/spring-boot-plus-spring-data-jpa/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-rest/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-rest/spring-rest1/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-rest/spring-rest2/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-rest/spring-rest2-part2/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
