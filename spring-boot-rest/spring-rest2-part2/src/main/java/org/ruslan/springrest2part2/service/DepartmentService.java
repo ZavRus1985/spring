@@ -17,6 +17,7 @@ public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
     private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
     @Transactional(readOnly = true)
     public List<Department> getAllDepartment() {
@@ -63,17 +64,6 @@ public class DepartmentService {
 
         updatebableDepartment.getEmployees().add(employee);
         departmentRepository.save(updatebableDepartment);
-    }
-
-    //------------------------------------------------------------------------------------
-
-    @Transactional
-    public void deleteDepartmentFromEmployee(Integer id) {
-
-        Employee updatebableEmployee = employeeRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Employee not found"));
-
-        employeeRepository.deleteDepartmentFromEmployee(updatebableEmployee.getId());
     }
 
     //------------------------------------------------------------------------------------

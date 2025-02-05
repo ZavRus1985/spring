@@ -22,7 +22,6 @@ public class Customer {
 
     private String phone;
 
-    //@OneToOne(cascade = CascadeType.PERSIST)
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private AccountCustomer accountCustomer;

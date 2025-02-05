@@ -20,14 +20,14 @@ public class DepartmentController {
         return departmentService.getAllDepartment();
     }
 
-    @GetMapping("/{departmentId}")
-    public Department getDepartmentIdById(@PathVariable Integer departmentId) {
-        return departmentService.getDepartmentById(departmentId);
+    @GetMapping("/{id}")
+    public Department getDepartmentIdById(@PathVariable Integer id) {
+        return departmentService.getDepartmentById(id);
     }
 
     //-------------------------------------
 
-    @PostMapping("/save")
+    @PostMapping()
     public void saveDepartment(@RequestBody Department department) {
         departmentService.saveDepartment(department);
     }
@@ -50,28 +50,21 @@ public class DepartmentController {
     //-------------------------------------
     //4.Добавить API:
     // для добавления работника в отдел,
-    // для удаления работника из отдела,
     // для перевода всех сотрудников из одного отдела в другой.
     //-------------------------------------
 
-    @PutMapping("/{id}/addEmployee")
-    public void updateDepartmentAddEmployee(@PathVariable Integer id,
+    @PutMapping("/{id}/add-employee")
+    public void addEmployeeToDepartment(@PathVariable Integer id,
                                             @RequestBody Employee employee) {
         departmentService.updateDepartmentAddEmployee(employee, id);
     }
 
     //-------------------------------------
 
-    @DeleteMapping("/{id}/deleteDepartment")
-    public void deleteDepartmentFromEmployee(@PathVariable Integer id) {
-        departmentService.deleteDepartmentFromEmployee(id);
-    }
-
-    //-------------------------------------
-
-    @PutMapping("/{sourceDepartmentId}/employees/{targetDepartmentId}")
-    public void editDepartmentForEmployee(@PathVariable Integer sourceDepartmentId,
-                                          @PathVariable Integer targetDepartmentId) {
+    // PUT   api/departments/transfer-employees?source-department-id=1&target-department-id=2
+    @PutMapping("/transfer-employees")
+    public void transferEmployeesToDepartment(@RequestParam(name = "source-department-id") Integer sourceDepartmentId,
+                                              @RequestParam(name = "target-department-id") Integer targetDepartmentId) {
         departmentService.editDepartmentForEmployee(sourceDepartmentId, targetDepartmentId);
     }
 

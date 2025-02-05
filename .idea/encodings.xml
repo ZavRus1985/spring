@@ -15,8 +15,6 @@
     <file url="file://$PROJECT_DIR$/spring-boot-rest/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-boot/spring-boot-basic/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-boot/spring-boot-plus-spring-data-jpa/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/spring-boot/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/spring-boot/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-core/part1lesson1/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-core/part1lesson1/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-core/part1lesson2/src/main/java" charset="UTF-8" />
@@ -31,6 +29,9 @@
     <file url="file://$PROJECT_DIR$/spring-core/part2lesson3/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-dto/dto-1/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-dto/dto-2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-dto/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-jpa/part1/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-jpa/part1/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-jpa/part2/src/main/java" charset="UTF-8" />

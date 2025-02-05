@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/spring-boot-rest" />
-    <file type="web" url="file://$PROJECT_DIR$/spring-boot/spring-boot-rest" />
-  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
@@ -15,15 +11,18 @@
         <option value="$PROJECT_DIR$/spring-boot-rest/spring-rest1/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot-rest/spring-rest2/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot-rest/spring-rest2-part2/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-rest/spring-dto/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-dto/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-dto/dto-1/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-dto/dto-2/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/spring-boot-rest/spring-dto/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot/pom.xml" />
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
-  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK" />
 </project>

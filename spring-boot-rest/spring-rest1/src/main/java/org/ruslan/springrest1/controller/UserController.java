@@ -3,6 +3,7 @@ package org.ruslan.springrest1.controller;
 import lombok.RequiredArgsConstructor;
 import org.ruslan.springrest1.entity.User;
 import org.ruslan.springrest1.service.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/api/users", produces = "application/xml")
+@RequestMapping(path = "/api/users",
+        produces = MediaType.APPLICATION_XML_VALUE,
+        consumes = MediaType.APPLICATION_XML_VALUE) // (path = "/api/users", produces = "application/xml")
 public class UserController {
 
     private final UserService userService;
