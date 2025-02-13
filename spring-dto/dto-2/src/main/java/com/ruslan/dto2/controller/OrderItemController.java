@@ -1,7 +1,7 @@
 package com.ruslan.dto2.controller;
 
-import com.ruslan.dto2.entity.manytomany.Order;
-import com.ruslan.dto2.entity.manytomany.Product;
+import com.ruslan.dto2.entity.onetomany.Order;
+import com.ruslan.dto2.entity.onetomany.Product;
 import com.ruslan.dto2.entity.onetomany.OrderItem;
 import com.ruslan.dto2.service.OrderItemService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/api/orderItem")
+@RequestMapping(path = "/api/orderItems")
 public class OrderItemController {
 
     private final OrderItemService orderItemService;
@@ -21,14 +21,13 @@ public class OrderItemController {
         return orderItemService.getAllOrderItems();
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public void saveOrderItem(@RequestBody OrderItem orderItem) {
         orderItemService.saveOrderItem(orderItem);
     }
 
-    @PostMapping("/add/{orderItemId}")
-    public void addOrderItem(@PathVariable Integer orderItemId, @RequestBody Product product
-                            ,@RequestBody Order order) {
-        orderItemService.addOrderItem(orderItemId, product, order);
+    @PutMapping("/{orderItemId}")
+    public void addOrderItem(@PathVariable Integer orderItemId, @RequestBody OrderItem orderItem) {
+        orderItemService.addOrderItem(orderItemId, orderItem);
     }
 }

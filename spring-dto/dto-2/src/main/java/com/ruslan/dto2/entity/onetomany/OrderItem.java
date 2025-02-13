@@ -1,7 +1,5 @@
 package com.ruslan.dto2.entity.onetomany;
 
-import com.ruslan.dto2.entity.manytomany.Order;
-import com.ruslan.dto2.entity.manytomany.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +16,7 @@ public class OrderItem {
     private Integer id;
 
     @Column(nullable = true)
-    private Integer countProduct;
+    private Integer quantity;
 
     @ManyToOne(cascade = PERSIST)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
@@ -27,4 +25,5 @@ public class OrderItem {
     @ManyToOne(cascade = PERSIST)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
+
 }

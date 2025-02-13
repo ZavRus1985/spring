@@ -1,6 +1,6 @@
 package com.ruslan.dto2.repository;
 
-import com.ruslan.dto2.entity.manytomany.Product;
+import com.ruslan.dto2.entity.onetomany.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @Query("select p from Product p left join fetch p.warehouse")
-    List<Product> findAllProducts();
 
     @Modifying
     @Transactional

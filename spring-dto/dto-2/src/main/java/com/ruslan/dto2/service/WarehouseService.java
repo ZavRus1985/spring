@@ -22,9 +22,7 @@ public class WarehouseService {
 
     @Transactional
     public void saveWarehouse(Warehouse warehouse) {
-
-        Warehouse singltoneWarehouse = new Warehouse();
-        warehouseRepository.save(singltoneWarehouse);
+        warehouseRepository.save(warehouse);
     }
 
     public Warehouse findById(int i) {

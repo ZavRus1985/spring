@@ -1,6 +1,5 @@
 package com.ruslan.dto2.entity.onetomany;
 
-import com.ruslan.dto2.entity.manytomany.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +9,8 @@ import static jakarta.persistence.CascadeType.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "product_items")
-public class ProductItem {
+@Table(name = "stocks")
+public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

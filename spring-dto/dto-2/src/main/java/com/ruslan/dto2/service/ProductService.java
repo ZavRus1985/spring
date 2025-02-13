@@ -1,10 +1,6 @@
 package com.ruslan.dto2.service;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.ruslan.dto2.entity.manytomany.Product;
-import com.ruslan.dto2.entity.onetomany.Warehouse;
+import com.ruslan.dto2.entity.onetomany.Product;
 import com.ruslan.dto2.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,12 +14,12 @@ import java.util.NoSuchElementException;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final WarehouseService warehouseService;
 
+    //---------------------------------------------------------------
 
     @Transactional(readOnly = true)
     public List<Product> getAllProduct() {
-        return productRepository.findAllProducts();
+        return productRepository.findAll();
     }
 
     @Transactional(readOnly = true)
@@ -34,18 +30,28 @@ public class ProductService {
     }
 
     @Transactional
+    public List<Product> findByCategory(String category) {
+        System.out.println(category);
+        return productRepository.findByCategory(category);
+    }
+
+    @Transactional
+    public List<Product> findByPriceBetween(Double lowerPrice, Double higherPrice ) {
+        return productRepository.findByPriceBetween(lowerPrice, higherPrice);
+    }
+
+    //---------------------------------------------------------------
+
+    @Transactional
     public void saveProduct(Product product) {
         Product saveProduct = new Product();
         saveProduct.setName(product.getName());
         saveProduct.setCategory(product.getCategory());
         saveProduct.setPrice(product.getPrice());
 
-        Warehouse warehouse = warehouseService.findById(1);
-        saveProduct.setWarehouse(warehouse);
-
         productRepository.save(saveProduct);
     }
-
+    //---------------------------------------------------------------
 
     @Transactional
     public void updateProduct(Integer id, Product product) {
@@ -53,14 +59,15 @@ public class ProductService {
                 .orElseThrow(() -> new NoSuchElementException("Product not found"));
 
         updatebableProduct.setName(product.getName());
-        updatebableProduct.setPrice(product.getPrice());
         updatebableProduct.setCategory(product.getCategory());
+        updatebableProduct.setPrice(product.getPrice());
 
         productRepository.updateProduct(updatebableProduct.getName(),
+                updatebableProduct.getCategory(),
                 String.valueOf(updatebableProduct.getPrice()),
-                updatebableProduct.getCategory()
-                ,id);
+                id);
     }
+    //---------------------------------------------------------------
 
     @Transactional
     public void deleteProduct(Integer id) {
@@ -70,13 +77,4 @@ public class ProductService {
         }
     }
 
-    @Transactional
-    public List<Product> findByCategory(String category) {
-        return productRepository.findByCategory(category);
-    }
-
-    @Transactional
-    public List<Product> findByPriceBetween(Double lowerPrice, Double higherPrice ) {
-        return productRepository.findByPriceBetween(lowerPrice, higherPrice);
-    }
 }

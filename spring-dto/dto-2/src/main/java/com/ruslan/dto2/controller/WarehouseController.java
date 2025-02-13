@@ -9,19 +9,17 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/api/warehouse")
+@RequestMapping(path = "/api/warehouses")
 public class WarehouseController {
 
     private final WarehouseService warehouseService;
 
     @GetMapping
-    public List<Warehouse> getSingleWarehouse() {
+    public List<Warehouse> getWarehouse() {
         return warehouseService.getAllWarehouse();
     }
 
-    //-------------------------------------
-
-    @PostMapping("/save")
+    @PostMapping
     public void saveWarehouse(@RequestBody Warehouse warehouse) {
         warehouseService.saveWarehouse(warehouse);
     }

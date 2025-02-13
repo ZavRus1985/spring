@@ -1,7 +1,7 @@
 package com.ruslan.dto2.controller;
 
 
-import com.ruslan.dto2.entity.manytomany.Product;
+import com.ruslan.dto2.entity.onetomany.Product;
 import com.ruslan.dto2.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +25,19 @@ public class ProductController {
         return productService.getProductById(productId);
     }
 
+    @GetMapping("/field") // http://localhost:8090/api/products/field?category=IT
+    public List<Product> getProductByCategory(@RequestParam String category) {
+        return productService.findByCategory(category);
+    }
+
+    @GetMapping("/price") //  http://localhost:8090/api/products/price?lowerPrice=15&higherPrice=40
+    public List<Product> findByPriceBetween(@RequestParam Double lowerPrice, @RequestParam Double higherPrice) {
+        return productService.findByPriceBetween(lowerPrice, higherPrice);
+    }
+
     //-------------------------------------
 
-    @PostMapping("/save")
+    @PostMapping
     public void saveProduct(@RequestBody Product product) {
         productService.saveProduct(product);
     }
@@ -48,13 +58,5 @@ public class ProductController {
 
     //------------------------------------
 
-    @GetMapping("/category")
-    public List<Product> getProductByCategory(@RequestParam String category) {
-        return productService.findByCategory(category);
-    }
 
-    @GetMapping("/price") //  http://localhost:8090/api/products/price?lowerPrice=15&higherPrice=40
-    public List<Product> findByPriceBetween(@RequestParam Double lowerPrice, @RequestParam Double higherPrice) {
-        return productService.findByPriceBetween(lowerPrice, higherPrice);
-    }
 }
