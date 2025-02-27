@@ -15,6 +15,7 @@
         <option value="$PROJECT_DIR$/spring-dto/pom.xml" />
         <option value="$PROJECT_DIR$/spring-dto/dto-1/pom.xml" />
         <option value="$PROJECT_DIR$/spring-dto/dto-2/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-dto/mapping/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -24,5 +25,5 @@
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" project-jdk-name="17" project-jdk-type="JavaSDK" />
 </project>

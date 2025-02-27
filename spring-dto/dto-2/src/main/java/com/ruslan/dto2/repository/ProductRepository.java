@@ -7,9 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
+
+    Optional<Product> findById(int id);
 
     @Modifying
     @Transactional
@@ -21,7 +24,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("delete from Product p where p.id = :id")
     int deleteProductById(Integer id);
 
+    Optional<Product> findById(Integer id);
+
     List<Product> findByCategory(String category);
 
-    List<Product> findByPriceBetween(Double lower, Double higher);
+    Optional<List<Product>> findByPriceBetween(Double lower, Double higher);
 }

@@ -1,7 +1,7 @@
 package com.ruslan.dto2.controller;
 
 import com.ruslan.dto2.entity.onetomany.Order;
-import com.ruslan.dto2.entity.onetomany.Product;
+import com.ruslan.dto2.entity.onetomany.OrderItem;
 import com.ruslan.dto2.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,4 +35,24 @@ public class OrderController {
     public void orderStatus(@PathVariable int orderId) {
         orderService.orderStatus(orderId);
     }
+
+    /*
+                        ORDER_ITEM CONTROLLER
+
+    */
+
+    @GetMapping("/orderItems")
+    public List<OrderItem> getAllOrderItems() {
+        return orderService.getAllOrderItems();
+    }
+
+    @PostMapping("/orderItems")
+    public void saveOrderItem(@RequestBody OrderItem orderItem) {
+        orderService.saveOrderItem(orderItem);
+    }
+
+//    @PutMapping("/orderItems/{orderItemId}")
+//    public void addOrderItem(@PathVariable Integer orderItemId, @RequestBody OrderItem orderItem) {
+//        orderService.addOrderItem(orderItemId, orderItem);
+//    }
 }

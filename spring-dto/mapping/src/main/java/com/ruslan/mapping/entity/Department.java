@@ -1,4 +1,4 @@
-package com.ruslan.dto1.entity;
+package com.ruslan.mapping.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -21,11 +21,20 @@ public class Department {
     private Integer id;
     private String name;
 
-    public Department() {
-    }
-
-    @OneToMany(cascade = {PERSIST, MERGE, DETACH, REFRESH}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     @JsonIgnore
     private List<Employee> employees = new ArrayList<>();
+
+    public Department(Integer departmentId, String departmentName) {
+        this.id = departmentId;
+        this.name = departmentName;
+    }
+
+    public Department(String departmentName) {
+        this.name = departmentName;
+    }
+
+    public Department() {}
+
 }

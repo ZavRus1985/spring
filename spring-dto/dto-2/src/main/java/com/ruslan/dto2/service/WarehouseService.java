@@ -7,13 +7,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class WarehouseService {
 
     private final WarehouseRepository warehouseRepository;
-    private final Warehouse warehouse = new Warehouse();
+
+    public Optional<Warehouse> findById(int id) {
+        Warehouse warehouse = warehouseRepository.findById(id).
+                orElseThrow(() -> new NoSuchElementException("Warehouse not found"));
+        return Optional.ofNullable(warehouse);
+    }
 
     @Transactional(readOnly = true)
     public List<Warehouse> getAllWarehouse() {
@@ -25,7 +32,5 @@ public class WarehouseService {
         warehouseRepository.save(warehouse);
     }
 
-    public Warehouse findById(int i) {
-       return warehouseRepository.findById(i).orElse(warehouse);
-    }
+
 }

@@ -1,5 +1,6 @@
 package com.ruslan.dto2.controller;
 
+import com.ruslan.dto2.dto.StockDto;
 import com.ruslan.dto2.entity.onetomany.Stock;
 import com.ruslan.dto2.service.StockService;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +21,17 @@ public class StockController {
     }
 
     @PostMapping
-    public void saveProductItem(@RequestBody Stock stock) {
+    public void saveProductItem(@RequestBody StockDto stock) {
         stockService.saveStock(stock);
     }
 
-    @PutMapping("/increaseCount")
-    public void addCountProduct(@RequestBody Stock stock) {
-        stockService.increaseProduct(stock);
+    @PutMapping("/increase-count")
+    public void addCountProduct(@RequestBody StockDto stockDto) {
+        stockService.increaseProduct(stockDto);
     }
 
-    @PutMapping("/decreaseCount")
-    public void deleteCountProduct(@RequestBody Stock stock) {
-        stockService.decreaseProduct(stock);
+    @PutMapping("/decrease-dount")
+    public void deleteCountProduct(@RequestBody StockDto stockDto) {
+        stockService.decreaseProduct(stockDto);
     }
 }
