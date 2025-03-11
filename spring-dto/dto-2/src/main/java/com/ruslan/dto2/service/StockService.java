@@ -3,7 +3,10 @@ package com.ruslan.dto2.service;
 
 import com.ruslan.dto2.dto.ObjectAdditionalResponse;
 import com.ruslan.dto2.dto.StockDto;
+import com.ruslan.dto2.entity.onetomany.Product;
 import com.ruslan.dto2.entity.onetomany.Stock;
+import com.ruslan.dto2.entity.onetomany.Warehouse;
+import com.ruslan.dto2.repository.ProductRepository;
 import com.ruslan.dto2.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StockService {
 
-    private final ProductService productService;
+    private final ProductRepository productRepository;
     private final StockRepository stockRepository;
     private final WarehouseService warehouseService;
 
@@ -26,20 +29,20 @@ public class StockService {
 
     }
 
-//    @Transactional
-//    public ObjectAdditionalResponse saveStock(StockDto stockDto) {
-//        Stock savedStock = new Stock();
-//
-//        ProductAdditionRequest product = productService.findById(stockDto.getProductId());
-//        Optional<Warehouse> warehouse = warehouseService.findById(stockDto.getWarehouseId());
-//
-//        savedStock.setProduct(product);
-//        savedStock.setWarehouse(warehouse.get());
-//        savedStock.setCount(stockDto.getCount());
-//
-//        stockRepository.save(savedStock);
-//        return new ObjectAdditionalResponse(true, "Operation saveStock confirmed");
-//    }
+    @Transactional
+    public ObjectAdditionalResponse saveStock(StockDto stockDto) {
+        Stock savedStock = new Stock();
+
+        Optional<Product> product = productRepository.findById(stockDto.getProductId());
+        Optional<Warehouse> warehouse = warehouseService.findById(stockDto.getWarehouseId());
+
+        savedStock.setProduct(product.get());
+        savedStock.setWarehouse(warehouse.get());
+        savedStock.setCount(stockDto.getCount());
+
+        stockRepository.save(savedStock);
+        return new ObjectAdditionalResponse(true, "Operation saveStock confirmed");
+    }
 
     @Transactional
     public ObjectAdditionalResponse increaseProduct(StockDto stockDto) {

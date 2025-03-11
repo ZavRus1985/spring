@@ -1,5 +1,6 @@
 package com.ruslan.dto2.controller;
 
+import com.ruslan.dto2.dto.OrderItemDto;
 import com.ruslan.dto2.entity.onetomany.Order;
 import com.ruslan.dto2.entity.onetomany.OrderItem;
 import com.ruslan.dto2.service.OrderService;
@@ -33,7 +34,7 @@ public class OrderController {
 
     @GetMapping("/status/{orderId}")  // http://localhost:8090/api/orders/status/1
     public void orderStatus(@PathVariable int orderId) {
-        orderService.orderStatus(orderId);
+        orderService.confirmOrder(orderId);
     }
 
     /*
@@ -51,8 +52,8 @@ public class OrderController {
         orderService.saveOrderItem(orderItem);
     }
 
-//    @PutMapping("/orderItems/{orderItemId}")
-//    public void addOrderItem(@PathVariable Integer orderItemId, @RequestBody OrderItem orderItem) {
-//        orderService.addOrderItem(orderItemId, orderItem);
-//    }
+    @PostMapping("/createOrder")
+    public void createOrder(@RequestBody List<OrderItemDto> orderItems) {
+        orderService.createOrder(orderItems);
+    }
 }

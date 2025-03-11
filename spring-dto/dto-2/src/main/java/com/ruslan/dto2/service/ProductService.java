@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -42,7 +41,7 @@ public class ProductService {
     public List<ProductAdditionRequest> findByCategory(String category) {
         List<ProductAdditionRequest> products = productRepository.findAll().stream().
                 map(p -> new ProductAdditionRequest(p.getCategory(), p.getName(), p.getPrice())).
-                filter(p -> p.getProductCategory().equals(category)).
+                filter(p -> p.getCategory().equals(category)).
                 toList();
         return products;
     }
@@ -51,8 +50,8 @@ public class ProductService {
     public List<ProductAdditionRequest> findByPriceBetween(Double lowerPrice, Double higherPrice ) {
         List<ProductAdditionRequest> products = productRepository.findAll().stream().
                 map(p -> new ProductAdditionRequest(p.getCategory(), p.getName(), p.getPrice())).
-                filter(p -> p.getProductPrice().compareTo(new BigDecimal(lowerPrice)) >= 0
-                        && p.getProductPrice().compareTo(new BigDecimal(higherPrice)) <= 0).
+                filter(p -> p.getPrice().compareTo(new BigDecimal(lowerPrice)) >= 0
+                        && p.getPrice().compareTo(new BigDecimal(higherPrice)) <= 0).
                 toList();
         return products;
     }
@@ -62,9 +61,9 @@ public class ProductService {
     @Transactional
     public ObjectAdditionalResponse saveProduct(ProductAdditionRequest product) {
         Product saveProduct = new Product();
-        saveProduct.setName(product.getProductName());
-        saveProduct.setCategory(product.getProductCategory());
-        saveProduct.setPrice(product.getProductPrice());
+        saveProduct.setName(product.getName());
+        saveProduct.setCategory(product.getCategory());
+        saveProduct.setPrice(product.getPrice());
 
         productRepository.save(saveProduct);
 
@@ -77,9 +76,9 @@ public class ProductService {
         Product updatebableProduct = productRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Product not found"));
 
-        updatebableProduct.setName(product.getProductName());
-        updatebableProduct.setCategory(product.getProductCategory());
-        updatebableProduct.setPrice(product.getProductPrice());
+        updatebableProduct.setName(product.getName());
+        updatebableProduct.setCategory(product.getCategory());
+        updatebableProduct.setPrice(product.getPrice());
 
         productRepository.updateProduct(updatebableProduct.getName(),
                 updatebableProduct.getCategory(),
