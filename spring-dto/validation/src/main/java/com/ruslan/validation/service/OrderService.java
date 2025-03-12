@@ -1,22 +1,21 @@
-package com.ruslan.dto2.service;
+package com.ruslan.validation.service;
 
-import com.ruslan.dto2.dto.OrderItemDto;
-import com.ruslan.dto2.entity.onetomany.Order;
-import com.ruslan.dto2.entity.onetomany.OrderItem;
-import com.ruslan.dto2.model.OrderStatus;
-import com.ruslan.dto2.repository.OrderItemRepository;
-import com.ruslan.dto2.repository.OrderRepository;
-import com.ruslan.dto2.repository.ProductRepository;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.ruslan.validation.dto.OrderItemDto;
+import com.ruslan.validation.entity.Order;
+import com.ruslan.validation.entity.OrderItem;
+import com.ruslan.validation.model.OrderStatus;
+import com.ruslan.validation.repository.CustomerRepository;
+import com.ruslan.validation.repository.OrderItemRepository;
+import com.ruslan.validation.repository.OrderRepository;
+import com.ruslan.validation.service.mapper.exception.NoSuchEntityException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +23,8 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
-    private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
+
 
     @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
@@ -34,7 +34,7 @@ public class OrderService {
     @Transactional(readOnly = true)
     public Order getOrderById(Integer id) {
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Order not found"));
+                .orElseThrow(() -> new NoSuchEntityException("Order not found"));
         return order;
     }
 
@@ -54,27 +54,30 @@ public class OrderService {
     @Transactional()
     public void orderPrice(Integer orderId) {
 
-        Order orderFindedDB = orderRepository.findById(orderId).orElseThrow(()
-                -> new NoSuchElementException("Order not found"));
-        List<OrderItem> orderItem = orderFindedDB.getOrderItems();
+        Order order = orderRepository.findById(orderId).orElseThrow(()
+                -> new NoSuchEntityException("Order not found"));
+        List<OrderItem> orderItems = order.getOrderItems();
 
         BigDecimal totalPrice = new BigDecimal(BigInteger.ZERO,  2);
         BigDecimal amount = new BigDecimal(BigInteger.ZERO,  2);
 
-        for (OrderItem orderItemDB : orderItem) {
-            totalPrice = orderItemDB.getProduct().getPrice().multiply(new BigDecimal(orderItemDB.getQuantity()));
+        for (OrderItem orderItem : orderItems) {
+            totalPrice = orderItem.getCustomer().getBankCard().getBalance().multiply(new BigDecimal(orderItem.getQuantity()));
             amount = amount.add(totalPrice);
         }
-        orderFindedDB.setPrice(amount);
-        orderRepository.save(orderFindedDB);
+        order.setPrice(amount);
+        orderRepository.save(order);
     }
 
     @Transactional()
     public void confirmOrder(Integer orderId) {
-        Order orderFindedDB = orderRepository.findById(orderId).orElseThrow(()
-                -> new NoSuchElementException("Order not found"));
-        orderFindedDB.setOrderStatus(OrderStatus.CONFIRMED);
-        orderRepository.save(orderFindedDB);
+        Order order = orderRepository.findById(orderId).orElseThrow(()
+                -> new NoSuchEntityException("Order not found"));
+        order.setOrderStatus(OrderStatus.CONFIRMED);
+
+        orderPrice(orderId);
+
+        orderRepository.save(order);
     }
 
 /*
@@ -107,7 +110,7 @@ public class OrderService {
         for (OrderItemDto orderItemDTO : orderItems) {
             OrderItem orderItem = new OrderItem();
             orderItem.setQuantity(orderItemDTO.getQuantity());
-            orderItem.setProduct(productRepository.findById(orderItemDTO.getProductId()).get());
+            orderItem.setCustomer(customerRepository.findById(orderItemDTO.getCustomerId()).get());
             orderItemList.add(orderItem);
         }
         order.setOrderItems(orderItemList);

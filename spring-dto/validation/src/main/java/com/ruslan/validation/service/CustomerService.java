@@ -1,7 +1,9 @@
 package com.ruslan.validation.service;
 
+import com.ruslan.validation.dto.BankCardDto;
 import com.ruslan.validation.dto.CustomerDto;
 import com.ruslan.validation.dto.ObjAdditionResponse;
+import com.ruslan.validation.entity.BankCard;
 import com.ruslan.validation.entity.Customer;
 import com.ruslan.validation.repository.CustomerRepository;
 import com.ruslan.validation.service.mapper.CustomerMapper;
@@ -39,6 +41,10 @@ public class CustomerService {
     @Transactional
     public void saveCustomer(CustomerDto customerDto) {
         Customer customer = customerMapper.toEntity(customerDto);
+        BankCard bankCard = customer.getBankCard();
+        if (bankCard != null) {
+            customer.setBankCard(bankCard);
+        }
         customerRepository.save(customer);
     }
 
@@ -77,8 +83,9 @@ public class CustomerService {
                 .orElseThrow(() -> new NoSuchEntityException("Customer not found"));
 
         CustomerDto customerDto = customerMapper.toDto(customer);
-        customerDto.setBalance(customerDto.getBalance().add(amount));
-        customer.getBankCard().setBalance(customerDto.getBalance());
+        BankCardDto bankCardDto = customerDto.getBankCard();
+        bankCardDto.setBalance(bankCardDto.getBalance().add(amount));
+        customer.getBankCard().setBalance(bankCardDto.getBalance());
 
         this.updateCustomer(customerDto, customerId);
 
@@ -92,8 +99,9 @@ public class CustomerService {
                 .orElseThrow(() -> new NoSuchEntityException("Customer not found"));
 
         CustomerDto customerDto = customerMapper.toDto(customer);
-        if(customerDto.getBalance().compareTo(amount) > 0){
-            customer.getBankCard().setBalance(customerDto.getBalance().subtract(amount));
+        BankCardDto bankCardDto = customerDto.getBankCard();
+        if(bankCardDto.getBalance().compareTo(amount) > 0){
+            customerDto.getBankCard().setBalance(bankCardDto.getBalance().subtract(amount));
             this.updateCustomer(customerDto, customerId);
         }
         else
@@ -108,7 +116,6 @@ public class CustomerService {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new NoSuchEntityException("Customer not found"));
 
-        CustomerDto customerDto = customerMapper.toDto(customer);
         return customer.getBankCard().getBalance();
     }
 }
