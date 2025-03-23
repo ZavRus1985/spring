@@ -1,4 +1,4 @@
-package com.ruslan.validation.dto;
+package com.ruslan.springsecurity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

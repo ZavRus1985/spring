@@ -1,4 +1,4 @@
-package com.ruslan.validation.entity;
+package com.ruslan.springsecurity.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

@@ -1,19 +1,21 @@
-package com.ruslan.validation.service;
+package com.ruslan.springsecurity.service;
 
 
-import com.ruslan.validation.entity.Customer;
-import com.ruslan.validation.entity.Order;
-import com.ruslan.validation.entity.OrderItem;
-import com.ruslan.validation.entity.Product;
-import com.ruslan.validation.model.OrderStatus;
-import com.ruslan.validation.repository.CustomerRepository;
-import com.ruslan.validation.repository.OrderItemRepository;
-import com.ruslan.validation.repository.OrderRepository;
-import com.ruslan.validation.repository.ProductRepository;
-import com.ruslan.validation.service.mapper.exception.NoSuchEntityException;
+
+import com.ruslan.springsecurity.entity.Customer;
+import com.ruslan.springsecurity.entity.Order;
+import com.ruslan.springsecurity.entity.OrderItem;
+import com.ruslan.springsecurity.entity.Product;
+import com.ruslan.springsecurity.model.OrderStatus;
+import com.ruslan.springsecurity.repository.CustomerRepository;
+import com.ruslan.springsecurity.repository.OrderItemRepository;
+import com.ruslan.springsecurity.repository.OrderRepository;
+import com.ruslan.springsecurity.repository.ProductRepository;
+import com.ruslan.springsecurity.service.mapper.exception.NoSuchEntityException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

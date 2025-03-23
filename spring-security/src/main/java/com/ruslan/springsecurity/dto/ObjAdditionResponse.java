@@ -1,4 +1,4 @@
-package com.ruslan.validation.dto;
+package com.ruslan.springsecurity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItemDto {
-
-    private Integer quantity;
-    private Integer productId;
+public class ObjAdditionResponse {
+    Boolean success;
+    String message;
 }

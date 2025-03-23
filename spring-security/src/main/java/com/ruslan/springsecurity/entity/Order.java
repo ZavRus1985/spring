@@ -1,7 +1,6 @@
-package com.ruslan.validation.entity;
+package com.ruslan.springsecurity.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ruslan.validation.model.OrderStatus;
+import com.ruslan.springsecurity.model.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

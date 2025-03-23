@@ -1,9 +1,10 @@
-package com.ruslan.validation.controller;
+package com.ruslan.springsecurity.controller;
 
 
-import com.ruslan.validation.entity.OrderItem;
-import com.ruslan.validation.service.OrderService;
-import com.ruslan.validation.entity.Order;
+
+import com.ruslan.springsecurity.entity.Order;
+import com.ruslan.springsecurity.entity.OrderItem;
+import com.ruslan.springsecurity.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

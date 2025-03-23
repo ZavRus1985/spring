@@ -17,6 +17,7 @@
         <option value="$PROJECT_DIR$/spring-dto/dto-2/pom.xml" />
         <option value="$PROJECT_DIR$/spring-dto/mapping/pom.xml" />
         <option value="$PROJECT_DIR$/spring-dto/validation/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-security/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

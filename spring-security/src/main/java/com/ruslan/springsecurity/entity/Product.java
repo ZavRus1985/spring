@@ -1,7 +1,6 @@
-package com.ruslan.validation.entity;
+package com.ruslan.springsecurity.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ruslan.validation.model.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,29 +12,29 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "products")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String category;
+
+    @Column(nullable = false)
     private BigDecimal price;
 
-    private OrderStatus orderStatus = OrderStatus.NOT_CONFIRMED;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
-
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public void setOrderItems(List<OrderItem> orderItems) {
         for (OrderItem orderItem : orderItems) {
-            orderItem.setOrder(this);
+            orderItem.setProduct(this);
         }
         this.orderItems = orderItems;
     }
