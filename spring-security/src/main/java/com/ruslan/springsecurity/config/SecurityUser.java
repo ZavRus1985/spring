@@ -3,11 +3,9 @@ package com.ruslan.springsecurity.config;
 import com.ruslan.springsecurity.entity.ApplicationUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class SecurityUser implements UserDetails {
@@ -25,6 +23,13 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Stream.of("ROLE_" + user.getRole()).map(SimpleGrantedAuthority::new).toList();
+        return user.getRoles().stream()
+                .map(SecurityRole::new)
+                .toList();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return user.isEnabled();
     }
 }

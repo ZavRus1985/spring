@@ -3,74 +3,79 @@ package com.ruslan.springsecurity.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
+@EnableMethodSecurity
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final DaoUserDetailsService daoUserDetailsService;
 
-    //----------------------------------------------
-    //@Value("${auth.type}")
-    //private String authType;
+    @Bean
+    public SecurityFilterChain httpSecurity(HttpSecurity http) throws Exception {
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(c -> c
+                        .requestMatchers(HttpMethod.GET).authenticated()
+                        .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // Защищаем API администратора
+                        .anyRequest().authenticated()
+                )
+                .formLogin(Customizer.withDefaults())
+                .authenticationProvider(inMemoryAuthenticationProvider())
+                .authenticationProvider(daoAuthenticationProvider())
+                .build();
+    }
 
-    /*
-    ДОБАВИТЬ В yaml файл ->
-
-    auth:
-    type: db  # Или "in-memory"
-     */
-    //----------------------------------------------
+//    @Bean
+//    public SecurityFilterChain httpSecurity(HttpSecurity http) throws Exception {
+//        return http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .formLogin(Customizer.withDefaults())
+//                .authenticationProvider(inMemoryAuthenticationProvider())
+//                .authenticationProvider(daoAuthenticationProvider())
+//                .build();
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
 
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService) {
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setUserDetailsService(daoUserDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 
         return daoAuthenticationProvider;
     }
 
-//    @Bean
-//    public UserDetailsService inMemoryUserDetailsService() {
-//        UserDetails user = User
-//                .withUsername("Mike")
-//                .password(passwordEncoder().encode("12345"))
-//                .roles("USER")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
+    public DaoAuthenticationProvider inMemoryAuthenticationProvider() {
+        DaoAuthenticationProvider inMemoryAuthenticationProvider = new DaoAuthenticationProvider();
+        inMemoryAuthenticationProvider.setUserDetailsService(inMemoryUserDetailsService());
+        inMemoryAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 
-
-    //------------------------------------------------
-
-    /*
-    Часть 2 (по желанию):
-1.	Реализовать так, чтобы одновременно были два бина – in-memory и db (необходимо добавить возможность перед запуском программы выбирать, какой вид аутентификации необходим).
-2.	Создать пользователя двумя способами – через MySQL Workbench, через REST-API (controller-service-repository).
-
-
-    SecurityFilterChain   ??????
-
-    @Bean
-    public AuthenticationManager authenticationManager() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(
-            "db".equals(authType) ? dbUserDetailsService : inMemoryUserDetailsService
-        );
-        authProvider.setPasswordEncoder(passwordEncoder);
-        return new ProviderManager(authProvider);
+        return inMemoryAuthenticationProvider;
     }
-     */
+
+    public InMemoryUserDetailsManager inMemoryUserDetailsService() {
+        UserDetails user = User
+                .withUsername("Kate")
+                .password(passwordEncoder().encode("12345"))
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user);
+    }
 }
