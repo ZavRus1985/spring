@@ -1,5 +1,6 @@
 package com.ruslan.springsecurity.controller;
 
+import com.ruslan.springsecurity.dto.UserDto;
 import com.ruslan.springsecurity.entity.ApplicationUser;
 import com.ruslan.springsecurity.entity.Role;
 import com.ruslan.springsecurity.service.AdminService;
@@ -23,12 +24,12 @@ public class AdminController {
     }
 
     @PostMapping("/users")
-    public ApplicationUser createUser(@RequestBody ApplicationUser user) {
-        return adminService.createUser(user);
+    public void createUser(@RequestBody UserDto user) {
+        adminService.createUser(user);
     }
 
     @PutMapping("/users/{username}/password")
-    public ApplicationUser updatePassword(@PathVariable String username, @RequestParam String newPassword) {
+    public ApplicationUser updatePassword(@PathVariable String username, @RequestBody String newPassword) {
         return adminService.updatePassword(username, newPassword);
     }
 
@@ -52,6 +53,11 @@ public class AdminController {
     public String blockUser(@PathVariable String username) {
         adminService.blockUser(username);
         return "User " + username + " has been blocked.";
+    }
+
+    @GetMapping("/current-user")
+    public String getCurrentUser() {
+        return "Current user: " + adminService.getCurrentUser();
     }
 }
 
