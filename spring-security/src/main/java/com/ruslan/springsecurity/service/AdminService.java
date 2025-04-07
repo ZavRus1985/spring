@@ -91,9 +91,9 @@ public class AdminService {
     }
 
     public String getCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return SecurityContextHolder.getContext().getAuthentication().getName();
 
-        return ((UserDetails) principal).getUsername().toString();
+        //return ((UserDetails) principal).getUsername().toString();
     }
 }
 

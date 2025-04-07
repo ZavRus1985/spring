@@ -6,6 +6,8 @@ import com.ruslan.springsecurity.entity.Role;
 import com.ruslan.springsecurity.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,8 +58,8 @@ public class AdminController {
     }
 
     @GetMapping("/current-user")
-    public String getCurrentUser() {
-        return "Current user: " + adminService.getCurrentUser();
+    public String getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        return "Current user: " + userDetails.getUsername();
     }
 }
 
