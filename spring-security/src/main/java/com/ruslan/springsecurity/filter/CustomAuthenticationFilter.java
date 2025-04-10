@@ -1,8 +1,10 @@
-package com.ruslan.springsecurity.config;
+package com.ruslan.springsecurity.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ruslan.springsecurity.config.JwtUtil;
 import com.ruslan.springsecurity.config.dto.AuthError;
 import com.ruslan.springsecurity.config.dto.AuthRequest;
+import com.ruslan.springsecurity.config.dto.TokenDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,9 +19,12 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.Collection;
 
 @RequiredArgsConstructor
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -27,6 +32,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     private static final ObjectMapper MAPPER = new ObjectMapper(); //JSON -> Object, Object -> JSON
 
     private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
 
     @Override
     @SneakyThrows
@@ -46,10 +52,15 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     }
 
     @Override
+    @SneakyThrows
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
-        //ThreadLocal -> object per Thread
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(authResult);
+        String username = authResult.getName();
+        Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
+        TokenDto tokenDto = new TokenDto(jwtUtil.createAccessToken(username, authorities));
+
+        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+        MAPPER.writeValue(response.getOutputStream(), tokenDto);
     }
 
     @Override

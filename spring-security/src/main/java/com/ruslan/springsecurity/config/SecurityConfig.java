@@ -1,21 +1,19 @@
 package com.ruslan.springsecurity.config;
 
+import com.ruslan.springsecurity.filter.CustomAuthenticationFilter;
+import com.ruslan.springsecurity.filter.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
@@ -25,6 +23,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final DaoUserDetailsService daoUserDetailsService;
+    private final JwtUtil jwtUtil;
 
 //    @Bean
 //    public SecurityFilterChain httpSecurity(HttpSecurity http) throws Exception {
@@ -34,6 +33,8 @@ public class SecurityConfig {
 //                .httpBasic(Customizer.withDefaults())
 //                .build();
 //    }
+
+    /*  module 3
 
     @Bean
     public SecurityFilterChain httpSecurity(HttpSecurity http,
@@ -45,6 +46,24 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .addFilter(new CustomAuthenticationFilter(authManager))
+                .exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .build();
+    }
+
+     */
+
+//module 4
+    @Bean
+    public SecurityFilterChain httpSecurity(HttpSecurity http,
+                                            AuthenticationManager authManager) throws Exception {
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(c -> c.anyRequest().authenticated())
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .addFilter(new CustomAuthenticationFilter(authManager, jwtUtil))
+                .addFilterAfter(new JwtTokenVerifier(jwtUtil), CustomAuthenticationFilter.class)
                 .exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .build();
     }

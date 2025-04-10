@@ -1,5 +1,6 @@
 package com.ruslan.springsecurity.config;
 
+import com.ruslan.springsecurity.config.model.SecurityUser;
 import com.ruslan.springsecurity.repository.ApplicationUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

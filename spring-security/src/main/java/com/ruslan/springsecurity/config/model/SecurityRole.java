@@ -1,4 +1,4 @@
-package com.ruslan.springsecurity.config;
+package com.ruslan.springsecurity.config.model;
 
 import com.ruslan.springsecurity.entity.Role;
 import lombok.RequiredArgsConstructor;
